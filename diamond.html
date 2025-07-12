@@ -1,94 +1,111 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Distributor Commission Calculator</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 2rem;
-      background: #f0f2f5;
-    }
-    .container {
-      background: white;
-      padding: 2rem;
-      max-width: 600px;
-      margin: auto;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    input, select, button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
-    .output {
-      margin-top: 1rem;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Commission Calculator (Authorized ARNs Only)</h2><label for="arn">Enter Your ARN:</label>
-<input type="text" id="arn" placeholder="ARN-XXXXXX">
-
-<div id="formSection" style="display: none;">
-  <label for="investment">Investment Amount (₹):</label>
-  <input type="number" id="investment">
-
-  <label for="upfront">Upfront Commission Rate (%):</label>
-  <input type="number" id="upfront">
-
-  <label for="trail">Trail Commission Rate per Year (%):</label>
-  <input type="number" id="trail">
-
-  <label for="years">Investment Period (Years):</label>
-  <input type="number" id="years">
-
-  <button onclick="calculateCommission()">Calculate</button>
-  <div class="output" id="result"></div>
-</div>
-
-<button onclick="verifyARN()">Verify ARN</button>
-<div class="output" id="arnStatus"></div>
-
-  </div>  <script>
-    const authorizedARNs = ["ARN-123456", "ARN-654321", "ARN-111222", "ARN-999888"];
-
-    function verifyARN() {
-      const inputARN = document.getElementById("arn").value.trim().toUpperCase();
-      const status = document.getElementById("arnStatus");
-      if (authorizedARNs.includes(inputARN)) {
-        status.innerText = "Access Granted";
-        status.style.color = "green";
-        document.getElementById("formSection").style.display = "block";
-      } else {
-        status.innerText = "Access Denied: Unauthorized ARN";
-        status.style.color = "red";
-        document.getElementById("formSection").style.display = "none";
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Distributor Commission Calculator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 2rem;
+        background: #f0f2f5;
       }
-    }
+      .container {
+        background: white;
+        padding: 2rem;
+        max-width: 600px;
+        margin: auto;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      input,
+      select,
+      button {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
+      .output {
+        margin-top: 1rem;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Commission Calculator (Authorized ARNs Only)</h2>
+      <label for="arn">Enter Your ARN:</label>
+      <input type="text" id="arn" placeholder="ARN-XXXXXX" />
 
-    function calculateCommission() {
-      const investment = parseFloat(document.getElementById("investment").value);
-      const upfrontRate = parseFloat(document.getElementById("upfront").value);
-      const trailRate = parseFloat(document.getElementById("trail").value);
-      const years = parseInt(document.getElementById("years").value);
+      <div id="formSection" style="display: none">
+        <label for="investment">Investment Amount (₹):</label>
+        <input type="number" id="investment" />
 
-      const upfront = (investment * upfrontRate) / 100;
-      const yearlyTrail = (investment * trailRate) / 100;
-      const totalTrail = yearlyTrail * years;
-      const total = upfront + totalTrail;
+        <label for="upfront">Upfront Commission Rate (%):</label>
+        <input type="number" id="upfront" />
 
-      document.getElementById("result").innerHTML = `
+        <label for="trail">Trail Commission Rate per Year (%):</label>
+        <input type="number" id="trail" />
+
+        <label for="years">Investment Period (Years):</label>
+        <input type="number" id="years" />
+
+        <button onclick="calculateCommission()">Calculate</button>
+        <div class="output" id="result"></div>
+      </div>
+
+      <button onclick="verifyARN()">Verify ARN</button>
+      <div class="output" id="arnStatus"></div>
+    </div>
+    <script>
+      const authorizedARNs = [
+        "ARN-123456",
+        "ARN-654321",
+        "ARN-111222",
+        "ARN-999888",
+      ];
+
+      function verifyARN() {
+        const inputARN = document
+          .getElementById("arn")
+          .value.trim()
+          .toUpperCase();
+        const status = document.getElementById("arnStatus");
+        if (authorizedARNs.includes(inputARN)) {
+          status.innerText = "Access Granted";
+          status.style.color = "green";
+          document.getElementById("formSection").style.display = "block";
+        } else {
+          status.innerText = "Access Denied: Unauthorized ARN";
+          status.style.color = "red";
+          document.getElementById("formSection").style.display = "none";
+        }
+      }
+
+      function calculateCommission() {
+        const investment = parseFloat(
+          document.getElementById("investment").value
+        );
+        const upfrontRate = parseFloat(
+          document.getElementById("upfront").value
+        );
+        const trailRate = parseFloat(document.getElementById("trail").value);
+        const years = parseInt(document.getElementById("years").value);
+
+        const upfront = (investment * upfrontRate) / 100;
+        const yearlyTrail = (investment * trailRate) / 100;
+        const totalTrail = yearlyTrail * years;
+        const total = upfront + totalTrail;
+
+        document.getElementById("result").innerHTML = `
         Upfront Commission: ₹${upfront.toFixed(2)}<br>
         Trail Commission per Year: ₹${yearlyTrail.toFixed(2)}<br>
         Total Trail Commission (${years} years): ₹${totalTrail.toFixed(2)}<br>
         <strong>Total Commission: ₹${total.toFixed(2)}</strong>
       `;
-    }
-  </script></body>
+      }
+    </script>
+  </body>
 </html>
